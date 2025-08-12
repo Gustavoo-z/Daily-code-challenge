@@ -1,9 +1,6 @@
-const fs = require("fs");
+import fs from "fs";
 
-const readline = require("readline").createInterface({
-  input: process.stdin,
-  output: process.stdout,
-});
+import { readline } from "../../../utils/readline.js";
 
 let tarefas = [];
 

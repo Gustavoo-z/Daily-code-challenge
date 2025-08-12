@@ -1,7 +1,4 @@
-const readline = require("readline").createInterface({
-  input: process.stdin,
-  output: process.stdout,
-});
+import { readline } from "../../utils/readline.js";
 
 const itensJogo = ["Pedra", "Papel", "Tesoura"];
 const regras = {

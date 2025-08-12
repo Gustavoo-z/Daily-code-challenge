@@ -1,7 +1,4 @@
-const readline = require("readline").createInterface({
-  input: process.stdin,
-  output: process.stdout,
-});
+import { readline } from "../../utils/readline.js";
 
 function perguntarFrase() {
   readline.question("Digite uma frase ou palavra \n > ", (resposta) => {
