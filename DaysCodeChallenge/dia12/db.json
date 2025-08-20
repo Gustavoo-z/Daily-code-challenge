@@ -1,0 +1,17 @@
+[
+  { "id": 1, "title": "Matrix", "year": 1999, "favorite": false },
+  { "id": 2, "title": "A Origem", "year": 2010, "favorite": false },
+  { "id": 3, "title": "Interestelar", "year": 2014, "favorite": true },
+  { "id": 4, "title": "Clube da Luta", "year": 1999, "favorite": false },
+  { "id": 5, "title": "O Cavaleiro das Trevas", "year": 2008, "favorite": true },
+  { "id": 6, "title": "Pulp Fiction: Tempo de Violência", "year": 1994, "favorite": false },
+  { "id": 7, "title": "Titanic", "year": 1997, "favorite": false },
+  { "id": 8, "title": "Forrest Gump: O Contador de Histórias", "year": 1994, "favorite": false },
+  { "id": 9, "title": "Gladiador", "year": 2000, "favorite": false },
+  { "id": 10, "title": "De Volta para o Futuro", "year": 1985, "favorite": true },
+  { "id": 11, "title": "Jurassic Park: Parque dos Dinossauros", "year": 1993, "favorite": false },
+  { "id": 12, "title": "O Poderoso Chefão", "year": 1972, "favorite": true },
+  { "id": 13, "title": "Um Sonho de Liberdade", "year": 1994, "favorite": true },
+  { "id": 14, "title": "O Silêncio dos Inocentes", "year": 1991, "favorite": false },
+  { "id": 15, "title": "Star Wars: Uma Nova Esperança", "year": 1977, "favorite": true }
+]
