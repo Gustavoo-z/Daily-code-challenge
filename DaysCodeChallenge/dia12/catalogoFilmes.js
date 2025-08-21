@@ -1,6 +1,8 @@
 import { createRequire } from "module";
 const require = createRequire(import.meta.url);
-const filmes = require("./db.json");
+const fs = require("fs");
+const path = require("path");
+let filmes = require("./db.json");
 
 import { readline } from "../../utils/readline.js";
 
@@ -72,10 +74,14 @@ function exibirTodosOsFilmes() {
 
 function adicionarNovoFilme() {
   console.log("Implementar função de adicionar filme.");
+  filmes = reordenarIds(filmes);
+  salvarDB(filmes);
 }
 
 function alternarFavorito() {
   console.log("Implementar função de alternar favorito.");
+  filmes = reordenarIds(filmes);
+  salvarDB(filmes);
 }
 
 function exibirFavoritos() {
@@ -90,6 +96,20 @@ function exibirFavoritos() {
 
 function removerFilme() {
   console.log("Implementar função de remover filme.");
+  filmes = reordenarIds(filmes);
+  salvarDB(filmes);
+}
+
+function reordenarIds(filmes) {
+  return filmes.map((filme, index) => ({
+    ...filme,
+    id: index + 1,
+  }));
+}
+
+function salvarDB(filmes) {
+  const filePath = path.join(__dirname, "db.json");
+  fs.writeFileSync(filePath, JSON.stringify(filmes, null, 2), "utf-8");
 }
 
 exibirOpcoes();
