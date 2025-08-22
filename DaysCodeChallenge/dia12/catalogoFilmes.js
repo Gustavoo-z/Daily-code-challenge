@@ -2,6 +2,10 @@ import { createRequire } from "module";
 const require = createRequire(import.meta.url);
 const fs = require("fs");
 const path = require("path");
+import { fileURLToPath } from "url";
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 let filmes = require("./db.json");
 
 import { readline } from "../../utils/readline.js";
@@ -34,23 +38,20 @@ function verificarOpcao(opcao) {
   switch (opcao) {
     case 1:
       exibirTodosOsFilmes();
-      readline.close();
+      exibirOpcoes();
       break;
     case 2:
       adicionarNovoFilme();
-      readline.close();
       break;
     case 3:
       alternarFavorito();
-      readline.close();
       break;
     case 4:
       exibirFavoritos();
-      readline.close();
+      exibirOpcoes();
       break;
     case 5:
       removerFilme();
-      readline.close();
       break;
     case 6:
       console.log("\nEncerrando o programa...\n");
@@ -64,40 +65,140 @@ function verificarOpcao(opcao) {
 
 function exibirTodosOsFilmes() {
   console.log("\n=== Catálogo de Filmes ===\n");
-  filmes.map((filme) =>
-    filme.favorite === true
-      ? console.log(`${filme.id} - ${filme.title} (${filme.year}) ⭐`)
-      : console.log(`${filme.id} - ${filme.title} (${filme.year})`)
-  );
-  console.log("\n==========================\n");
+  filmes.forEach((filme) => {
+    console.log(
+      `${filme.id} - ${filme.title} (${filme.year})${
+        filme.favorite ? " ⭐" : ""
+      }`
+    );
+  });
+  console.log("\n==========================");
 }
 
 function adicionarNovoFilme() {
-  console.log("Implementar função de adicionar filme.");
-  filmes = reordenarIds(filmes);
-  salvarDB(filmes);
+  readline.question(
+    "\nQual o nome do filme que deseja adicionar? > ",
+    (nomeFilme) => {
+      readline.question(
+        `\nQual o ano de lançamento de ${nomeFilme}? > `,
+        (anoFilme) => {
+          anoFilme = Number(anoFilme);
+
+          function perguntarFavorito() {
+            readline.question(
+              `\nVocê deseja colocar o filme ${nomeFilme} (${anoFilme}) nos favoritos? (S/N) > `,
+              (resposta) => {
+                const r = resposta.trim().toUpperCase();
+
+                if (r !== "S" && r !== "N") {
+                  console.log("\n⚠ Entrada inválida. Digite apenas S ou N.");
+                  return perguntarFavorito();
+                }
+
+                const favorito = r === "S";
+                const novoFilme = criarObj(nomeFilme, anoFilme, favorito);
+                filmes.push(novoFilme);
+                filmes = reordenarIds(filmes);
+                salvarDB(filmes);
+
+                console.log(
+                  `\n✅ Filme adicionado: ${novoFilme.title} (${
+                    novoFilme.year
+                  })${favorito ? " ⭐" : ""}`
+                );
+                exibirOpcoes();
+              }
+            );
+          }
+
+          perguntarFavorito();
+        }
+      );
+    }
+  );
+}
+
+function criarObj(nome, ano, fav) {
+  const novoId = filmes.length > 0 ? filmes[filmes.length - 1].id + 1 : 1;
+
+  return {
+    id: novoId,
+    title: nome,
+    year: ano,
+    favorite: fav,
+  };
 }
 
 function alternarFavorito() {
-  console.log("Implementar função de alternar favorito.");
-  filmes = reordenarIds(filmes);
-  salvarDB(filmes);
+  readline.question(
+    "\nQual filme você deseja favoritar ou desfavoritar? Digite o ID > ",
+    (filmeParaTrocar) => {
+      filmeParaTrocar = Number(filmeParaTrocar);
+      let encontrou = false;
+
+      for (const filme of filmes) {
+        if (filme.id === filmeParaTrocar) {
+          encontrou = true;
+          filme.favorite = !filme.favorite;
+
+          if (filme.favorite) {
+            console.log(
+              `\nO filme ${filme.title} (${filme.year}) foi favoritado!`
+            );
+          } else {
+            console.log(
+              `\nO filme ${filme.title} (${filme.year}) foi desfavoritado!`
+            );
+          }
+          salvarDB(filmes);
+          break;
+        }
+      }
+      if (!encontrou) {
+        console.log("\n❌ ID não encontrado, voltando as opções da lista...");
+      }
+      exibirOpcoes();
+    }
+  );
 }
 
 function exibirFavoritos() {
+  const favoritos = filmes.filter((f) => f.favorite);
+
   console.log("\n=== Filmes Favoritos ===\n");
-  filmes.map((filme) =>
-    filme.favorite === true
-      ? console.log(`${filme.id} - ${filme.title} (${filme.year}) ⭐`)
-      : ""
-  );
-  console.log("\n=========================\n");
+
+  if (favoritos.length === 0) {
+    console.log("Nenhum filme favoritado ainda.");
+  } else {
+    favoritos.forEach((f) => {
+      console.log(`${f.id} - ${f.title} (${f.year}) ⭐`);
+    });
+  }
+
+  console.log("\n=========================");
 }
 
 function removerFilme() {
-  console.log("Implementar função de remover filme.");
-  filmes = reordenarIds(filmes);
-  salvarDB(filmes);
+  readline.question(
+    "\nQual filme você deseja remover? Digite o ID > ",
+    (filmeParaRemover) => {
+      filmeParaRemover = Number(filmeParaRemover);
+      const filmeEncontrado = filmes.find((f) => f.id === filmeParaRemover);
+
+      if (!filmeEncontrado) {
+        console.log("\n❌ ID não encontrado. Nenhum filme foi removido.");
+        return exibirOpcoes();
+      }
+
+      console.log(
+        `\nO filme ${filmeEncontrado.title} (${filmeEncontrado.year}) foi removido!`
+      );
+      filmes = filmes.filter((filme) => filme.id !== filmeParaRemover);
+      filmes = reordenarIds(filmes);
+      salvarDB(filmes);
+      exibirOpcoes();
+    }
+  );
 }
 
 function reordenarIds(filmes) {
