@@ -22,7 +22,7 @@ function perguntarTarefa() {
         adicionarAoArray(tarefa);
         perguntarTarefa();
       }
-    }
+    },
   );
 }
 
@@ -57,7 +57,7 @@ function perguntarSeSalva() {
         console.log("Valor inválido, digite novamente");
         perguntarSeSalva();
       }
-    }
+    },
   );
 }
 

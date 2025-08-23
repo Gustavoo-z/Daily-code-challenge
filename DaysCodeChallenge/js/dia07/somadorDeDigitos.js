@@ -21,7 +21,7 @@ function somarDigitos(numero) {
   console.log(
     `\nA soma do número ${Number(numero)} é ${soma} (${
       soma % 2 === 0 ? "par" : "ímpar"
-    }).\n`
+    }).\n`,
   );
   readline.close();
 }

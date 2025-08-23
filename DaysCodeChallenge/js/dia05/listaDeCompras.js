@@ -1,4 +1,4 @@
-import { readline } from "../../utils/readline.js";
+import { readline } from "../../../utils/readline.js";
 
 let itensDaLista = [];
 
@@ -71,7 +71,7 @@ function removerItem() {
       console.log(`\n🗑 "${primeiraLetraMaiuscula(item)}" foi removido.`);
     } else {
       console.log(
-        `\n❌ O item "${primeiraLetraMaiuscula(item)}" não está na lista.`
+        `\n❌ O item "${primeiraLetraMaiuscula(item)}" não está na lista.`,
       );
     }
     exibirOpcoes();

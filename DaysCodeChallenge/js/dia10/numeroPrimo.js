@@ -1,4 +1,4 @@
-import { readline } from "../../utils/readline.js";
+import { readline } from "../../../utils/readline.js";
 
 function perguntarNumero() {
   readline.question(
@@ -7,7 +7,7 @@ function perguntarNumero() {
       const numConvertido = parseInt(numero);
       ehPrimo(numConvertido);
       readline.close();
-    }
+    },
   );
 }
 

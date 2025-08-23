@@ -1,4 +1,4 @@
-import { readline } from "../../utils/readline.js";
+import { readline } from "../../../utils/readline.js";
 
 const itensJogo = ["Pedra", "Papel", "Tesoura"];
 const regras = {
@@ -21,7 +21,7 @@ function perguntarItem() {
 
       aleatorizar(itemUsuario);
       perguntarSeContinua();
-    }
+    },
   );
 }
 

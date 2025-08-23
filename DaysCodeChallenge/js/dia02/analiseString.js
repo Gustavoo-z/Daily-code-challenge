@@ -1,4 +1,4 @@
-import { readline } from "../../utils/readline.js";
+import { readline } from "../../../utils/readline.js";
 
 function contarVogaisConsoantes(str) {
   const vogais = "aeiouAEIOU";

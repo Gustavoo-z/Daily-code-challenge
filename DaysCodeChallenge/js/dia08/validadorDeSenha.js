@@ -1,4 +1,4 @@
-import { readline } from "../../utils/readline.js";
+import { readline } from "../../../utils/readline.js";
 
 function perguntarSenha() {
   readline.question("\nDigite a senha para validar.\n> ", (senha) => {

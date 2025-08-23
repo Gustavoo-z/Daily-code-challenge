@@ -50,8 +50,8 @@ function mediaNotas(notas) {
   const media = somaNotas / qntdNotas;
   console.log(
     `A média das notas ${notas} é ${media.toFixed(
-      2
-    )} portanto você está ${msgMedia(media)}`
+      2,
+    )} portanto você está ${msgMedia(media)}`,
   );
 }
 

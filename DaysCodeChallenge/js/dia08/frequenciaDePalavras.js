@@ -6,7 +6,7 @@ function perguntarFrase() {
     (frase) => {
       verificarFrase(frase);
       readline.close();
-    }
+    },
   );
 }
 

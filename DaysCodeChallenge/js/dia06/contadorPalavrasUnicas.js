@@ -1,4 +1,4 @@
-import { readline } from "../../utils/readline.js";
+import { readline } from "../../../utils/readline.js";
 
 function perguntarFrase() {
   readline.question("\nDigite a frase que deseja verificar: ", (frase) => {
@@ -20,7 +20,7 @@ function perguntarOrdemAlfabetica(palavrasUnicas) {
     (resposta) => {
       verificarOrdem(resposta, palavrasUnicas);
       readline.close();
-    }
+    },
   );
 }
 

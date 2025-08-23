@@ -8,7 +8,7 @@ const __dirname = path.dirname(__filename);
 
 let filmes = require("./db.json");
 
-import { readline } from "../../utils/readline.js";
+import { readline } from "../../../utils/readline.js";
 
 console.log("\nBem-vindo ao seu catálogo de filmes!");
 
@@ -69,7 +69,7 @@ function exibirTodosOsFilmes() {
     console.log(
       `${filme.id} - ${filme.title} (${filme.year})${
         filme.favorite ? " ⭐" : ""
-      }`
+      }`,
     );
   });
   console.log("\n==========================");
@@ -104,17 +104,17 @@ function adicionarNovoFilme() {
                 console.log(
                   `\n✅ Filme adicionado: ${novoFilme.title} (${
                     novoFilme.year
-                  })${favorito ? " ⭐" : ""}`
+                  })${favorito ? " ⭐" : ""}`,
                 );
                 exibirOpcoes();
-              }
+              },
             );
           }
 
           perguntarFavorito();
-        }
+        },
       );
-    }
+    },
   );
 }
 
@@ -143,11 +143,11 @@ function alternarFavorito() {
 
           if (filme.favorite) {
             console.log(
-              `\nO filme ${filme.title} (${filme.year}) foi favoritado!`
+              `\nO filme ${filme.title} (${filme.year}) foi favoritado!`,
             );
           } else {
             console.log(
-              `\nO filme ${filme.title} (${filme.year}) foi desfavoritado!`
+              `\nO filme ${filme.title} (${filme.year}) foi desfavoritado!`,
             );
           }
           salvarDB(filmes);
@@ -158,7 +158,7 @@ function alternarFavorito() {
         console.log("\n❌ ID não encontrado, voltando as opções da lista...");
       }
       exibirOpcoes();
-    }
+    },
   );
 }
 
@@ -191,13 +191,13 @@ function removerFilme() {
       }
 
       console.log(
-        `\nO filme ${filmeEncontrado.title} (${filmeEncontrado.year}) foi removido!`
+        `\nO filme ${filmeEncontrado.title} (${filmeEncontrado.year}) foi removido!`,
       );
       filmes = filmes.filter((filme) => filme.id !== filmeParaRemover);
       filmes = reordenarIds(filmes);
       salvarDB(filmes);
       exibirOpcoes();
-    }
+    },
   );
 }
 

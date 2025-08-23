@@ -12,7 +12,7 @@ function perguntarDados() {
 
       if (isNaN(peso) || isNaN(altura) || peso <= 0 || altura <= 0) {
         console.log(
-          "\n❌ Por favor, insira valores válidos para peso e altura.\n"
+          "\n❌ Por favor, insira valores válidos para peso e altura.\n",
         );
         readline.close();
         return;
@@ -24,7 +24,7 @@ function perguntarDados() {
         "\nDeseja calcular novamente? (s/n)\n> ",
         (resposta) => {
           recalcularIMC(resposta);
-        }
+        },
       );
     });
   });

@@ -1,4 +1,4 @@
-import { readline } from "../../utils/readline.js";
+import { readline } from "../../../utils/readline.js";
 
 let quantidade = 1;
 let numeroAleatorio;
@@ -31,8 +31,8 @@ function verificarNumero(resposta) {
     console.log(
       `Você precisou de ${quantidade} ${pluralizar(
         "chance",
-        quantidade
-      )} para acertar.`
+        quantidade,
+      )} para acertar.`,
     );
     perguntarSeContinua();
   }

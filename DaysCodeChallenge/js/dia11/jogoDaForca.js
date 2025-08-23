@@ -1,4 +1,4 @@
-import { readline } from "../../utils/readline.js";
+import { readline } from "../../../utils/readline.js";
 
 console.log("Bem-vindo ao jogo da forca.");
 
@@ -16,7 +16,7 @@ function perguntarJogo() {
         console.log("Resposta inválida! Digite S ou N.");
         perguntarJogo();
       }
-    }
+    },
   );
 }
 
@@ -49,7 +49,7 @@ function logicaJogo(letra, palavraSecreta) {
   if (!palavraSecreta.includes(letra)) {
     tentativasRestantes--;
     console.log(
-      `❌ Letra incorreta! Restam ${tentativasRestantes} tentativas.`
+      `❌ Letra incorreta! Restam ${tentativasRestantes} tentativas.`,
     );
   }
 
@@ -90,7 +90,7 @@ function adicionarLetra(letra) {
 
 async function obterPalavra() {
   const res = await fetch(
-    "https://random-word-api.herokuapp.com/word/?lang=pt-br"
+    "https://random-word-api.herokuapp.com/word/?lang=pt-br",
   );
   const data = await res.json();
   return data[0];

@@ -1,4 +1,4 @@
-import { readline } from "../../utils/readline.js";
+import { readline } from "../../../utils/readline.js";
 
 function perguntarNumero() {
   readline.question(
@@ -6,7 +6,7 @@ function perguntarNumero() {
     (numero) => {
       calcularFatorial(numero);
       readline.close();
-    }
+    },
   );
 }
 

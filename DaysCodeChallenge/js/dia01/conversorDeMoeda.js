@@ -1,4 +1,4 @@
-import { readline } from "../../utils/readline.js";
+import { readline } from "../../../utils/readline.js";
 
 perguntarDados();
 
@@ -20,30 +20,30 @@ function perguntarDados() {
 
               if (isNaN(valor) || Number(valor) <= 0) {
                 console.log(
-                  "\n❌ Por favor, insira um valor numérico maior que zero.\n"
+                  "\n❌ Por favor, insira um valor numérico maior que zero.\n",
                 );
                 return perguntarDados();
               }
 
               fetchMoeda(moedaOrigem, moedaDestino, valor);
-            }
+            },
           );
-        }
+        },
       );
-    }
+    },
   );
 }
 
 async function fetchMoeda(moedaOrigem, moedaDestino, valor) {
   try {
     const resposta = await fetch(
-      `https://api.frankfurter.app/latest?amount=${valor}&from=${moedaOrigem}&to=${moedaDestino}`
+      `https://api.frankfurter.app/latest?amount=${valor}&from=${moedaOrigem}&to=${moedaDestino}`,
     );
     const dados = await resposta.json();
 
     if (!dados.rates || !dados.rates[moedaDestino]) {
       console.log(
-        `\n❌ Não foi possível converter de ${moedaOrigem} para ${moedaDestino}. Verifique as moedas e tente novamente.\n`
+        `\n❌ Não foi possível converter de ${moedaOrigem} para ${moedaDestino}. Verifique as moedas e tente novamente.\n`,
       );
       return perguntarReiniciar();
     }
@@ -51,8 +51,8 @@ async function fetchMoeda(moedaOrigem, moedaDestino, valor) {
     const valorFinal = dados.rates[moedaDestino];
     console.log(
       `\n💰 ${valor} ${moedaOrigem} equivalem a ${valorFinal.toFixed(
-        2
-      )} ${moedaDestino}\n`
+        2,
+      )} ${moedaDestino}\n`,
     );
     perguntarReiniciar();
   } catch (error) {
