@@ -1,6 +1,8 @@
-import { readline } from "../../../utils/readline.js";
+import {
+  readlinePromise,
+  fecharReadline,
+} from "../../../utils/readlinePromise.js";
 
-// Estrutura inicial do jogo
 let tabuleiro = [
   [" ", " ", " "],
   [" ", " ", " "],
@@ -8,42 +10,108 @@ let tabuleiro = [
 ];
 let jogadorAtual = "X";
 
-// Função para exibir o tabuleiro
 function exibirTabuleiro() {
-  // TODO: Mostrar o tabuleiro formatado no console
+  console.clear();
+  console.log(`
+    ${tabuleiro[0][0]} | ${tabuleiro[0][1]} | ${tabuleiro[0][2]}
+   ---+---+---
+    ${tabuleiro[1][0]} | ${tabuleiro[1][1]} | ${tabuleiro[1][2]}
+   ---+---+---
+    ${tabuleiro[2][0]} | ${tabuleiro[2][1]} | ${tabuleiro[2][2]}
+  `);
 }
 
-// Função para verificar se a jogada é válida
 function jogadaValida(linha, coluna) {
-  // TODO: Retornar true se a posição estiver vazia, caso contrário false
+  return (
+    linha >= 0 &&
+    linha < 3 &&
+    coluna >= 0 &&
+    coluna < 3 &&
+    tabuleiro[linha][coluna] === " "
+  );
 }
 
-// Função para fazer uma jogada
 function fazerJogada(linha, coluna) {
-  // TODO: Atualizar o tabuleiro com o símbolo do jogadorAtual
-  // e alternar o jogador
+  tabuleiro[linha][coluna] = jogadorAtual;
+  jogadorAtual = jogadorAtual === "X" ? "O" : "X";
 }
 
-// Função para verificar se alguém venceu
 function verificarVencedor() {
-  // TODO: Verificar todas as linhas, colunas e diagonais
-  // Retornar "X", "O" ou null
+  // Linhas
+  for (let i = 0; i < 3; i++) {
+    if (
+      tabuleiro[i][0] !== " " &&
+      tabuleiro[i][0] === tabuleiro[i][1] &&
+      tabuleiro[i][1] === tabuleiro[i][2]
+    ) {
+      return tabuleiro[i][0];
+    }
+  }
+  // Colunas
+  for (let j = 0; j < 3; j++) {
+    if (
+      tabuleiro[0][j] !== " " &&
+      tabuleiro[0][j] === tabuleiro[1][j] &&
+      tabuleiro[1][j] === tabuleiro[2][j]
+    ) {
+      return tabuleiro[0][j];
+    }
+  }
+  // Diagonais
+  if (
+    tabuleiro[0][0] !== " " &&
+    tabuleiro[0][0] === tabuleiro[1][1] &&
+    tabuleiro[1][1] === tabuleiro[2][2]
+  ) {
+    return tabuleiro[0][0];
+  }
+  if (
+    tabuleiro[0][2] !== " " &&
+    tabuleiro[0][2] === tabuleiro[1][1] &&
+    tabuleiro[1][1] === tabuleiro[2][0]
+  ) {
+    return tabuleiro[0][2];
+  }
+
+  return null;
 }
 
-// Função para verificar se deu empate
 function verificarEmpate() {
-  // TODO: Retornar true se todas as casas estiverem preenchidas e não houver vencedor
+  return tabuleiro.flat().every((casa) => casa !== " ");
 }
 
-// Função principal do jogo
-function jogar() {
-  // TODO:
-  // 1. Mostrar o tabuleiro
-  // 2. Pedir a linha e coluna do jogador
-  // 3. Validar jogada
-  // 4. Fazer jogada
-  // 5. Verificar vencedor ou empate
-  // 6. Repetir até o jogo acabar
+async function jogar() {
+  let vencedor = null;
+
+  while (!vencedor && !verificarEmpate()) {
+    exibirTabuleiro();
+    console.log(`Vez do jogador: ${jogadorAtual}`);
+
+    const linha = parseInt(
+      await readlinePromise("Informe a linha (0, 1, 2): ")
+    );
+    const coluna = parseInt(
+      await readlinePromise("Informe a coluna (0, 1, 2): ")
+    );
+
+    if (!jogadaValida(linha, coluna)) {
+      console.log("Jogada inválida! Tente novamente.");
+      continue;
+    }
+
+    fazerJogada(linha, coluna);
+    vencedor = verificarVencedor();
+  }
+
+  exibirTabuleiro();
+
+  if (vencedor) {
+    console.log(`Parabéns! O jogador ${vencedor} venceu!`);
+  } else {
+    console.log("Empate!");
+  }
+
+  fecharReadline();
 }
 
 jogar();
