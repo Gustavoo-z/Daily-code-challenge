@@ -9,9 +9,9 @@ let tabuleiro = [
   [" ", " ", " "],
 ];
 let jogadorAtual = "X";
+let mensagem = "";
 
 function exibirTabuleiro() {
-  console.clear();
   console.log(`
     ${tabuleiro[0][0]} | ${tabuleiro[0][1]} | ${tabuleiro[0][2]}
    ---+---+---
@@ -85,6 +85,7 @@ async function jogar() {
 
   while (!vencedor && !verificarEmpate()) {
     exibirTabuleiro();
+    if (mensagem) console.log(mensagem);
     console.log(`Vez do jogador: ${jogadorAtual}`);
 
     const linha = parseInt(
@@ -95,10 +96,11 @@ async function jogar() {
     );
 
     if (!jogadaValida(linha, coluna)) {
-      console.log("Jogada inválida! Tente novamente.");
+      mensagem = "Jogada inválida! Tente novamente.";
       continue;
     }
 
+    mensagem = ""; // reset da mensagem
     fazerJogada(linha, coluna);
     vencedor = verificarVencedor();
   }
