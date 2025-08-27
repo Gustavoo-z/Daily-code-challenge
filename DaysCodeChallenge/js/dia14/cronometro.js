@@ -4,19 +4,39 @@ let segundos = 0;
 let intervalo = null;
 
 function iniciarCronometro() {
-  // Implementar lógica para iniciar o setInterval
+  if (intervalo) {
+    console.log("O cronômetro já está rodando!");
+    return;
+  }
+  intervalo = setInterval(() => {
+    segundos++;
+    exibirTempo();
+  }, 1000);
+  console.log("Cronômetro iniciado!");
 }
 
 function pausarCronometro() {
-  // Implementar lógica para pausar o cronômetro
+  if (!intervalo) {
+    console.log("O cronômetro já está pausado.");
+    return;
+  }
+  clearInterval(intervalo);
+  intervalo = null;
+  console.log("Cronômetro pausado.");
 }
 
 function zerarCronometro() {
-  // Implementar lógica para resetar o cronômetro
+  segundos = 0;
+  exibirTempo();
+  console.log("Cronômetro zerado.");
 }
 
 function exibirTempo() {
-  // Implementar lógica para formatar e mostrar tempo (mm:ss)
+  const minutos = Math.floor(segundos / 60);
+  const seg = segundos % 60;
+  console.log(
+    `Tempo: ${String(minutos).padStart(2, "0")}:${String(seg).padStart(2, "0")}`
+  );
 }
 
 function mostrarMenu() {
@@ -41,6 +61,7 @@ function perguntar() {
         zerarCronometro();
         break;
       case "4":
+        pausarCronometro();
         readline.close();
         return;
       default:
